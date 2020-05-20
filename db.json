@@ -1,0 +1,16 @@
+{
+  "1": {
+    "id": 1,
+    "mood": 2,
+    "feeling": "happy",
+    "comment": 7,
+    "createdAt": 1519211809934
+  },
+  "2": {
+    "id": 2,
+    "mood": 4,
+    "feeling": "bored",
+    "comment": 7,
+    "createdAt": 1519211809934
+  }
+}

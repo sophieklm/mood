@@ -19,11 +19,11 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "npm-run-all --parallel watch:server start:web",
-    "prestart": "build:server",
+    "start": "npm run watch:server",
+    "prestart": "npm run build:server",
     "start:web": "react-scripts start",
     "start:server": "node dist/server",
-    "watch:server": "nodemon --watch dist/server",
+    "watch:server": "nodemon dist/server",
     "build:server": "tsc -p ./server",
     "build": "react-scripts build",
     "test": "react-scripts test",
