@@ -1,17 +1,21 @@
 import React from "react";
+import { Dropdown } from "semantic-ui-react";
 
-interface Mood {
-  mood: number;
-  feeling: Feeling;
-  comment?: string;
-}
-
-enum Feeling {
-  Depressed = "depressed",
-  Optimistic = "optimistic",
-  Bored = "bored",
-  Happy = "happy",
-}
+const moods = [
+  { key: "1", text: "1", value: "1" },
+  { key: "2", text: "2", value: "2" },
+  { key: "3", text: "3", value: "3" },
+  { key: "4", text: "4", value: "4" },
+  { key: "5", text: "5", value: "5" },
+  { key: "6", text: "6", value: "6" },
+  { key: "7", text: "7", value: "7" },
+];
+const feelings = [
+  { key: "depressed", text: "Depressed", value: "depressed" },
+  { key: "optimistic", text: "Optimistic", value: "optimistic" },
+  { key: "happy", text: "Happy", value: "happy" },
+  { key: "bored", text: "Bored", value: "bored" },
+];
 
 interface MoodProps {
   action: string;
@@ -46,8 +50,6 @@ class MoodCreate extends React.Component<MoodProps, MoodState> {
   handleSubmit = async (
     formValues: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    console.log(formValues);
-    console.log(JSON.stringify(formValues));
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -55,7 +57,6 @@ class MoodCreate extends React.Component<MoodProps, MoodState> {
     };
     fetch("http://localhost:3001/moods", requestOptions)
       .then(async (response) => {
-        console.log(response);
         const data = await response.json();
         if (!response.ok) {
           const error = (data && data.message) || response.status;
@@ -75,15 +76,27 @@ class MoodCreate extends React.Component<MoodProps, MoodState> {
         <h2>How are you feeling today?</h2>
         <div className="field">
           <label>Mood: </label>
-          <input name="mood" />
+          <Dropdown
+            name="mood"
+            placeholder="Mood"
+            fluid
+            selection
+            options={moods}
+          />
         </div>
         <div className="field">
           <label>Feeling: </label>
-          <input name="feeling" />
+          <Dropdown
+            name="feeling"
+            placeholder="Feeling"
+            fluid
+            selection
+            options={feelings}
+          />
         </div>
         <div className="field">
           <label>Comment: </label>
-          <input name="comment" />
+          <input name="comment" placeholder="Comment" />
         </div>
         <button className="ui button teal">Submit</button>
       </form>
