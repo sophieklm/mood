@@ -12,6 +12,7 @@ npm run start:web // start the web app
 # Navigate to:
 
 ```
-http://localhost:3000/moods // frontend app
+http://localhost:3000 // frontent form
+http://localhost:3000/insights // frontend insights
 http://localhost:3001/moods // to see the server response
 ```
