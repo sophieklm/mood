@@ -19,11 +19,14 @@ export class MoodService {
 
   public create = async (newItem: Mood): Promise<void> => {
     try {
-      const id = new Date().valueOf();
+      console.log(newItem);
+      const createdAt = new Date();
+      const id = createdAt.valueOf();
       this.moods[id] = {
         ...newItem,
-        id,
+        createdAt,
       };
+      console.log(this.moods[id]);
       fs.writeFileSync(
         path.join(__dirname, "../db.json"),
         JSON.stringify(this.moods)

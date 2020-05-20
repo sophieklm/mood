@@ -1,9 +1,8 @@
 export interface Mood {
-  id: number;
   mood: number;
   feeling: Feeling;
   comment: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export interface Moods {
