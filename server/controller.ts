@@ -5,11 +5,8 @@ import { moodService } from "./service";
 export class MoodController {
   public createMood = async (req: express.Request, res: express.Response) => {
     try {
-      console.log(req);
       const item: Mood = req.body;
-
       await moodService.create(item);
-
       res.sendStatus(201);
     } catch (e) {
       res.status(404).send(e.message);

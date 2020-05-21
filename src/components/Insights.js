@@ -1,11 +1,7 @@
 import React from "react";
 
-interface InsightsState {
-  apiResponse: string;
-}
-
-class Insights extends React.Component<{}, InsightsState> {
-  constructor(props: any) {
+class Insights extends React.Component {
+  constructor(props) {
     super(props);
     this.state = { apiResponse: "" };
   }
@@ -16,7 +12,7 @@ class Insights extends React.Component<{}, InsightsState> {
       .then((res) => this.setState({ apiResponse: res }));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.callAPI();
   }
 

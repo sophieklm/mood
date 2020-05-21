@@ -17,7 +17,7 @@ export class MoodService {
     return this.moods;
   };
 
-  public create = async (newItem: Mood): Promise<void> => {
+  public create = async (newItem: Mood) => {
     try {
       console.log(newItem);
       const createdAt = new Date();
@@ -27,10 +27,11 @@ export class MoodService {
         createdAt,
       };
       console.log(this.moods[id]);
-      fs.writeFileSync(
+      await fs.writeFileSync(
         path.join(__dirname, "../db.json"),
         JSON.stringify(this.moods)
       );
+      return "Mood Saved";
     } catch (error) {
       console.log("Something went wrong: create", error);
       throw new Error(error);

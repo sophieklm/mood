@@ -1,5 +1,6 @@
 import React from "react";
-import { Dropdown } from "semantic-ui-react";
+import { Redirect } from "react-router";
+import { Select } from "semantic-ui-react";
 
 const moods = [
   { key: "1", text: "1", value: "1" },
@@ -17,43 +18,30 @@ const feelings = [
   { key: "bored", text: "Bored", value: "bored" },
 ];
 
-interface MoodProps {
-  action: string;
-}
-
-export interface Values {
-  [key: string]: any;
-}
-
-export interface Errors {
-  [key: string]: string;
-}
-
-export interface MoodState {
-  values: Values;
-  errors: Errors;
-  submitSuccess?: boolean;
-}
-
-class MoodCreate extends React.Component<MoodProps, MoodState> {
-  constructor(props: MoodProps) {
+class MoodCreate extends React.Component {
+  constructor(props) {
     super(props);
-
-    const errors: Errors = {};
-    const values: Values = {};
     this.state = {
-      errors,
-      values,
+      mood: undefined,
+      feeling: undefined,
+      comment: "",
+      errors: [],
+      redirect: false,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit = async (
-    formValues: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  handleSubmit = async () => {
+    // this.validateForm();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify({
+        mood: this.state.mood,
+        feeling: this.state.feeling,
+        comment: this.state.comment,
+      }),
     };
     fetch("http://localhost:3001/moods", requestOptions)
       .then(async (response) => {
@@ -62,41 +50,56 @@ class MoodCreate extends React.Component<MoodProps, MoodState> {
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
         }
-        this.setState({ values: data.id });
       })
       .catch((error) => {
         this.setState({ errors: error.toString() });
         console.error("There was an error!", error);
       });
+    this.setState(() => ({ redirect: true }));
   };
 
+  handleChange(event, data) {
+    const name = data.name;
+    const value = data.value;
+    this.setState({ [name]: value });
+  }
+
   render() {
+    const { value } = this.state;
+    if (this.state.redirect === true) {
+      return <Redirect to="/insights" />;
+    }
     return (
       <form onSubmit={this.handleSubmit} className="ui form">
         <h2>How are you feeling today?</h2>
         <div className="field">
           <label>Mood: </label>
-          <Dropdown
+          <Select
             name="mood"
             placeholder="Mood"
-            fluid
-            selection
             options={moods}
+            value={value}
+            onChange={this.handleChange}
           />
         </div>
         <div className="field">
           <label>Feeling: </label>
-          <Dropdown
+          <Select
             name="feeling"
             placeholder="Feeling"
-            fluid
-            selection
             options={feelings}
+            value={value}
+            onChange={this.handleChange}
           />
         </div>
         <div className="field">
           <label>Comment: </label>
-          <input name="comment" placeholder="Comment" />
+          <input
+            name="comment"
+            placeholder="Comment"
+            value={value}
+            onChange={this.handleChange}
+          />
         </div>
         <button className="ui button teal">Submit</button>
       </form>

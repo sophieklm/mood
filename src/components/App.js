@@ -3,7 +3,7 @@ import Insights from "./Insights";
 import MoodCreate from "./MoodCreate";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-class App extends React.Component<{}, {}> {
+class App extends React.Component {
   render() {
     return (
       <div className="ui container">
