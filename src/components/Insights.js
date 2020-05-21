@@ -29,7 +29,8 @@ class Insights extends React.Component {
     const out = responses.map(function (value) {
       return parseInt(value.mood);
     });
-    return out.reduce((a, b) => a + b, 0) / out.length;
+    const average = out.reduce((a, b) => a + b, 0) / out.length;
+    return Math.round(average * 10) / 10;
   }
 
   renderAverage() {
@@ -61,15 +62,20 @@ class Insights extends React.Component {
 
   render() {
     return (
-      <div className="ui center grid">
-        <div className="three wide center column">
-          <h3>Average Mood</h3>
-          {this.renderAverage()}
-        </div>
-        <div className="nine wide center column">{this.renderTable()}</div>
-        <div className="three wide center column">
-          <h3>Check in Count</h3>
-          {this.renderCheckins()}
+      <div className="ui segment">
+        <h2 className="ui teal centered header">Insights</h2>
+        <div className="internally celled ui two column center grid">
+          <div className="three wide center column">
+            <div className="ui teal segment">
+              <h3 className="ui teal centered header">Average Mood</h3>
+              <h4 className="ui centered header">{this.renderAverage()}</h4>
+            </div>
+            <div className="ui teal segment">
+              <h3 className="ui teal header">Check in Count</h3>
+              <h4 className="ui centered header">{this.renderCheckins()}</h4>
+            </div>
+          </div>
+          <div className="twelve wide center column">{this.renderTable()}</div>
         </div>
       </div>
     );

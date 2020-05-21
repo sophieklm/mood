@@ -104,7 +104,7 @@ class MoodCreate extends React.Component {
       <form onSubmit={this.handleSubmit} className="ui form">
         <h2>How are you feeling today?</h2>
         <div className="field">
-          <label>Mood: </label>
+          <label>What's your mood? (1:bad - 7:excellent) </label>
           <Select
             name="mood"
             placeholder="Mood"
@@ -114,7 +114,7 @@ class MoodCreate extends React.Component {
           />
         </div>
         <div className="field">
-          <label>Feeling: </label>
+          <label>How are you feeling?</label>
           <Select
             name="feeling"
             placeholder="Feeling"
@@ -124,7 +124,7 @@ class MoodCreate extends React.Component {
           />
         </div>
         <div className="field">
-          <label>Comment: </label>
+          <label>Any other comments: </label>
           <input
             name="comment"
             placeholder="Comment"

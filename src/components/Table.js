@@ -7,6 +7,7 @@ class Table extends React.Component {
     this.state = { data: undefined };
   }
 
+  // TO DO: remove this lifecycle method
   componentWillMount() {
     this.setState({ data: this.props.data });
   }
@@ -23,7 +24,7 @@ class Table extends React.Component {
 
   render() {
     return (
-      <table className="ui celled padded table">
+      <table className="ui celled padded teal table">
         <thead>
           <tr>
             <th className="single line">Mood</th>
