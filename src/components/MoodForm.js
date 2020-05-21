@@ -87,7 +87,7 @@ class MoodForm extends React.Component {
       <div className="ui segment">
         {this.renderErrors()}
         <form onSubmit={this.handleSubmit} className="ui form">
-          <h2>How are you feeling today?</h2>
+          <h2 className="ui teal header">How are you feeling today?</h2>
           <Button className="ui button teal right floated" href="/insights">
             Insights
           </Button>
