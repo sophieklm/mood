@@ -19,14 +19,15 @@ export class MoodService {
 
   public create = async (newItem: Mood) => {
     try {
-      console.log(newItem);
+      if (!newItem.mood || !newItem.feeling) {
+        throw new Error("Must enter both mood and feeling");
+      }
       const createdAt = new Date();
       const id = createdAt.valueOf();
       this.moods[id] = {
         ...newItem,
         createdAt,
       };
-      console.log(this.moods[id]);
       await fs.writeFileSync(
         path.join(__dirname, "../db.json"),
         JSON.stringify(this.moods)

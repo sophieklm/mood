@@ -32,8 +32,8 @@ class MoodCreate extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit = async () => {
-    // this.validateForm();
+  handleSubmit = async (event, data) => {
+    this.validateForm(data);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,6 +58,27 @@ class MoodCreate extends React.Component {
     this.setState(() => ({ redirect: true }));
   };
 
+  validateForm(data) {
+    const name = data.name;
+    const value = data.value;
+    let errors = this.state.errors;
+
+    switch (name) {
+      case "mood":
+        errors.push(value === "" ? "Must submit mood" : "");
+        break;
+      case "feeling":
+        errors.push(value === "" ? "Must submit feeling" : "");
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ errors }, () => {
+      console.log(errors);
+    });
+  }
+
   handleChange(event, data) {
     const name = data.name;
     const value = data.value;
@@ -65,9 +86,12 @@ class MoodCreate extends React.Component {
   }
 
   render() {
-    const { value } = this.state;
+    const { value, errors } = this.state;
     if (this.state.redirect === true) {
       return <Redirect to="/insights" />;
+    }
+    if (this.state.errors.length !== 0) {
+      return <div>{errors}</div>;
     }
     return (
       <form onSubmit={this.handleSubmit} className="ui form">
