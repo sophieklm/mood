@@ -2,6 +2,25 @@ import React from "react";
 import TableRow from "./TableRow";
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: undefined };
+  }
+
+  componentWillMount() {
+    this.setState({ data: this.props.data });
+  }
+
+  renderTableRow() {
+    if (!this.state.data) {
+      return null;
+    } else {
+      return this.state.data.map((element) => (
+        <TableRow data={element} key={element.createdAt} />
+      ));
+    }
+  }
+
   render() {
     return (
       <table className="ui celled padded table">
@@ -13,9 +32,7 @@ class Table extends React.Component {
             <th>Date</th>
           </tr>
         </thead>
-        <tbody>
-          <TableRow data={this.props.data} />
-        </tbody>
+        <tbody>{this.renderTableRow()}</tbody>
       </table>
     );
   }

@@ -46,7 +46,7 @@ class Insights extends React.Component {
     if (responses.length === 0) {
       return null;
     } else {
-      return <Table data={this.state.apiResponse} />;
+      return <Table data={responses} />;
     }
   }
 
