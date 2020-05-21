@@ -30,10 +30,12 @@ class MoodCreate extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleSubmit = async (event, data) => {
-    this.validateForm(data);
+    // TO DO: Get validations to work
+    // this.validateForm(data);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,6 +47,7 @@ class MoodCreate extends React.Component {
     };
     fetch("http://localhost:3001/moods", requestOptions)
       .then(async (response) => {
+        // TO DO: Get response to render json properly
         const data = await response.json();
         if (!response.ok) {
           const error = (data && data.message) || response.status;
@@ -85,6 +88,10 @@ class MoodCreate extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleInputChange(event) {
+    this.setState({ comment: event.target.value });
+  }
+
   render() {
     const { value, errors } = this.state;
     if (this.state.redirect === true) {
@@ -121,8 +128,7 @@ class MoodCreate extends React.Component {
           <input
             name="comment"
             placeholder="Comment"
-            value={value}
-            onChange={this.handleChange}
+            onChange={this.handleInputChange}
           />
         </div>
         <button className="ui button teal">Submit</button>
