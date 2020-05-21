@@ -3,7 +3,7 @@ import { Select } from "semantic-ui-react";
 import { MOODS, FEELINGS } from "../consts";
 import { Button } from "semantic-ui-react";
 
-class MoodCreate extends React.Component {
+class MoodForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,4 +126,4 @@ class MoodCreate extends React.Component {
   }
 }
 
-export default MoodCreate;
+export default MoodForm;

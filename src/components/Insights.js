@@ -76,7 +76,7 @@ class Insights extends React.Component {
               <h3 className="ui teal header">Check in Count</h3>
               <h4 className="ui centered header">{this.renderCheckins()}</h4>
             </div>
-            <div class="ui padded centered grid">
+            <div className="ui padded centered grid">
               <Button className="ui button teal" href="/">
                 New Mood
               </Button>
