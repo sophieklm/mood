@@ -28,11 +28,10 @@ export class MoodService {
         ...newItem,
         createdAt,
       };
-      await fs.writeFileSync(
+      fs.writeFileSync(
         path.join(__dirname, "../db.json"),
         JSON.stringify(this.moods)
       );
-      return "Mood Saved";
     } catch (error) {
       console.log("Something went wrong: create", error);
       throw new Error(error);

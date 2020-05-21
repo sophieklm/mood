@@ -9,7 +9,7 @@ export class MoodController {
       await moodService.create(item);
       res.sendStatus(201);
     } catch (e) {
-      res.status(404).send(e.message);
+      res.status(400).send(e.message);
     }
   };
 
@@ -18,7 +18,7 @@ export class MoodController {
       const items: Moods = await moodService.findAll();
       res.status(200).send(items);
     } catch (e) {
-      res.status(404).send(e.message);
+      res.status(400).send(e.message);
     }
   };
 }
