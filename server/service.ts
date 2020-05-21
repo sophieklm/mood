@@ -4,10 +4,13 @@ import { Mood, Moods } from "./mood.interface";
 
 export class MoodService {
   private moods: Moods;
-  constructor() {
-    this.moods = this.getMoodsFromFile();
+  private file;
+
+  constructor({ file = path.join(__dirname, "../db.json") }) {
+    this.file = file;
+    this.moods = this.getMoodsFromFile(file);
   }
-  private getMoodsFromFile = (file = path.join(__dirname, "../db.json")) => {
+  private getMoodsFromFile = (file) => {
     const data = fs.readFileSync(file);
     const moods = JSON.parse(data.toString());
     return moods;
@@ -28,10 +31,8 @@ export class MoodService {
         ...newItem,
         createdAt,
       };
-      fs.writeFileSync(
-        path.join(__dirname, "../db.json"),
-        JSON.stringify(this.moods)
-      );
+      fs.writeFileSync(this.file, JSON.stringify(this.moods));
+      return this.moods[id];
     } catch (error) {
       console.log("Something went wrong: create", error);
       throw new Error(error);
@@ -39,6 +40,8 @@ export class MoodService {
   };
 }
 
-const moodService = new MoodService();
+const moodService = new MoodService({
+  file: path.join(__dirname, "../db.json"),
+});
 
 export { moodService };

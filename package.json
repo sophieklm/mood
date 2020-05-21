@@ -2,9 +2,8 @@
   "name": "unmind",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/server.js",
   "dependencies": {
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dateformat": "^3.0.3",
@@ -27,6 +26,7 @@
     "build:server": "tsc -p ./server",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:server": "jest --maxWorkers=1 --silent --watchAll --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,8 +45,15 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.8.0",
+    "@testing-library/react": "^10.0.4",
     "@types/cors": "^2.8.6",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.41",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "nodemon": "^2.0.4",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.0.0"
   }
 }
