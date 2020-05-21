@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router";
 import { Select } from "semantic-ui-react";
 
 const moods = [
@@ -23,10 +22,9 @@ class MoodCreate extends React.Component {
     super(props);
     this.state = {
       mood: undefined,
-      feeling: undefined,
+      feeling: "",
       comment: "",
       errors: [],
-      redirect: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -46,19 +44,18 @@ class MoodCreate extends React.Component {
       }),
     };
     fetch("http://localhost:3001/moods", requestOptions)
-      .then(async (response) => {
-        // TO DO: Get response to render json properly
-        const data = await response.json();
+      .then((response) => {
         if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+          return Promise.reject(
+            "An error occured: please check you have entered the required fields"
+          );
         }
+        this.props.history.push("/insights");
       })
       .catch((error) => {
         this.setState({ errors: error.toString() });
-        console.error("There was an error!", error);
       });
-    this.setState(() => ({ redirect: true }));
+    event.preventDefault();
   };
 
   validateForm(data) {
@@ -77,9 +74,7 @@ class MoodCreate extends React.Component {
         break;
     }
 
-    this.setState({ errors }, () => {
-      console.log(errors);
-    });
+    this.setState({ errors });
   }
 
   handleChange(event, data) {
@@ -92,47 +87,52 @@ class MoodCreate extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
+  renderErrors() {
+    if (this.state.errors.length === 0) {
+      return null;
+    } else {
+      return <div>{this.state.errors}</div>;
+    }
+  }
+
   render() {
-    const { value, errors } = this.state;
-    if (this.state.redirect === true) {
-      return <Redirect to="/insights" />;
-    }
-    if (this.state.errors.length !== 0) {
-      return <div>{errors}</div>;
-    }
+    const { value } = this.state;
     return (
-      <form onSubmit={this.handleSubmit} className="ui form">
-        <h2>How are you feeling today?</h2>
-        <div className="field">
-          <label>What's your mood? (1:bad - 7:excellent) </label>
-          <Select
-            name="mood"
-            placeholder="Mood"
-            options={moods}
-            value={value}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label>How are you feeling?</label>
-          <Select
-            name="feeling"
-            placeholder="Feeling"
-            options={feelings}
-            value={value}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label>Any other comments: </label>
-          <input
-            name="comment"
-            placeholder="Comment"
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <button className="ui button teal">Submit</button>
-      </form>
+      <div>
+        {this.renderErrors()}
+        <form onSubmit={this.handleSubmit} className="ui form">
+          <h2>How are you feeling today?</h2>
+          <div className="field">
+            <label>What's your mood? (1:bad - 7:excellent) </label>
+            <Select
+              name="mood"
+              placeholder="Mood"
+              options={moods}
+              value={value}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label>How are you feeling?</label>
+            <Select
+              name="feeling"
+              placeholder="Feeling"
+              value={value}
+              options={feelings}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label>Any other comments: </label>
+            <input
+              name="comment"
+              placeholder="Comment"
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <button className="ui button teal">Submit</button>
+        </form>
+      </div>
     );
   }
 }

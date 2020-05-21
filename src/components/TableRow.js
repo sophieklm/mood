@@ -4,12 +4,17 @@ import dateFormat from "dateformat";
 class TableRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: undefined };
+    this.state = { data: this.props.data };
   }
 
-  // TO DO: remove this lifecycle method
-  componentWillMount() {
-    this.setState({ data: this.props.data });
+  static getDerivedStateFromProps(props, state) {
+    if (props.data !== state.prevPropsData) {
+      return {
+        prevPropsData: props.data,
+        data: props.data,
+      };
+    }
+    return null;
   }
 
   renderDate() {
@@ -17,7 +22,6 @@ class TableRow extends React.Component {
       return null;
     } else {
       const date = this.state.data.createdAt;
-      console.log(date);
       return dateFormat(Date.parse(date), "dS mmmm yyyy, h:MM TT");
     }
   }

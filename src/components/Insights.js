@@ -12,6 +12,7 @@ class Insights extends React.Component {
       .then(async (res) => res.json())
       .then((res) => {
         let response = [];
+        // converts json object to array of objects
         /*eslint-disable no-unused-vars*/
         for (let [key, value] of Object.entries(res)) {
           response.push(value);
@@ -38,7 +39,7 @@ class Insights extends React.Component {
     if (responses.length === 0) {
       return null;
     } else {
-      return <div className="ui">{this.calculateAverage()}</div>;
+      return <div>{this.calculateAverage()}</div>;
     }
   }
 
