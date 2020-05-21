@@ -1,21 +1,7 @@
 import React from "react";
 import { Select } from "semantic-ui-react";
-
-const moods = [
-  { key: "1", text: "1", value: "1" },
-  { key: "2", text: "2", value: "2" },
-  { key: "3", text: "3", value: "3" },
-  { key: "4", text: "4", value: "4" },
-  { key: "5", text: "5", value: "5" },
-  { key: "6", text: "6", value: "6" },
-  { key: "7", text: "7", value: "7" },
-];
-const feelings = [
-  { key: "depressed", text: "Depressed", value: "depressed" },
-  { key: "optimistic", text: "Optimistic", value: "optimistic" },
-  { key: "happy", text: "Happy", value: "happy" },
-  { key: "bored", text: "Bored", value: "bored" },
-];
+import { MOODS, FEELINGS } from "../consts";
+import { Button } from "semantic-ui-react";
 
 class MoodCreate extends React.Component {
   constructor(props) {
@@ -58,24 +44,24 @@ class MoodCreate extends React.Component {
     event.preventDefault();
   };
 
-  validateForm(data) {
-    const name = data.name;
-    const value = data.value;
-    let errors = this.state.errors;
+  // validateForm(data) {
+  //   const name = data.name;
+  //   const value = data.value;
+  //   let errors = this.state.errors;
 
-    switch (name) {
-      case "mood":
-        errors.push(value === "" ? "Must submit mood" : "");
-        break;
-      case "feeling":
-        errors.push(value === "" ? "Must submit feeling" : "");
-        break;
-      default:
-        break;
-    }
+  //   switch (name) {
+  //     case "mood":
+  //       errors.push(value === "" ? "Must submit mood" : "");
+  //       break;
+  //     case "feeling":
+  //       errors.push(value === "" ? "Must submit feeling" : "");
+  //       break;
+  //     default:
+  //       break;
+  //   }
 
-    this.setState({ errors });
-  }
+  //   this.setState({ errors });
+  // }
 
   handleChange(event, data) {
     const name = data.name;
@@ -98,16 +84,19 @@ class MoodCreate extends React.Component {
   render() {
     const { value } = this.state;
     return (
-      <div>
+      <div className="ui segment">
         {this.renderErrors()}
         <form onSubmit={this.handleSubmit} className="ui form">
           <h2>How are you feeling today?</h2>
+          <Button className="ui button teal right floated" href="/insights">
+            Insights
+          </Button>
           <div className="field">
-            <label>What's your mood? (1:bad - 7:excellent) </label>
+            <label>What's your mood? (1 = bad | 7 = excellent) </label>
             <Select
               name="mood"
               placeholder="Mood"
-              options={moods}
+              options={MOODS}
               value={value}
               onChange={this.handleChange}
             />
@@ -118,7 +107,7 @@ class MoodCreate extends React.Component {
               name="feeling"
               placeholder="Feeling"
               value={value}
-              options={feelings}
+              options={FEELINGS}
               onChange={this.handleChange}
             />
           </div>

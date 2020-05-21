@@ -6,9 +6,8 @@ REST API Server with React frontend to allow a user to perform a mood check in a
 
 - Make feeling multi-select and store as array
 - Get validations and error messages to render nicely
-- Reverse table order
+- Reverse table order - get date as date rather than string
 - Specs
-- Sort out backend data storage
 
 # Run
 

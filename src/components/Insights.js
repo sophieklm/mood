@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "./Table";
+import { Button } from "semantic-ui-react";
 
 class Insights extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Insights extends React.Component {
       <div className="ui segment">
         <h2 className="ui teal centered header">Insights</h2>
         <div className="internally celled ui two column center grid">
-          <div className="three wide center column">
+          <div className="three wide column">
             <div className="ui teal segment">
               <h3 className="ui teal centered header">Average Mood</h3>
               <h4 className="ui centered header">{this.renderAverage()}</h4>
@@ -74,6 +75,11 @@ class Insights extends React.Component {
             <div className="ui teal segment">
               <h3 className="ui teal header">Check in Count</h3>
               <h4 className="ui centered header">{this.renderCheckins()}</h4>
+            </div>
+            <div class="ui padded centered grid">
+              <Button className="ui button teal" href="/">
+                New Mood
+              </Button>
             </div>
           </div>
           <div className="twelve wide center column">{this.renderTable()}</div>
