@@ -7,9 +7,7 @@ class MoodForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mood: undefined,
-      feeling: "",
-      comment: "",
+      data: {},
       errors: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,72 +15,76 @@ class MoodForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleSubmit = async (event, data) => {
-    // TO DO: Get validations to work
-    // this.validateForm(data);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mood: this.state.mood,
-        feeling: this.state.feeling,
-        comment: this.state.comment,
-      }),
-    };
-    fetch("http://localhost:3001/moods", requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(
-            "An error occured: please check you have entered the required fields"
-          );
-        }
-        this.props.history.push("/insights");
-      })
-      .catch((error) => {
-        this.setState({ errors: error.toString() });
-      });
+  handleSubmit = async (event) => {
+    if (this.validateForm()) {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mood: this.state.data.mood,
+          feeling: this.state.data.feeling,
+          comment: this.state.data.comment,
+        }),
+      };
+      fetch("http://localhost:3001/moods", requestOptions)
+        .then((response) => {
+          if (!response.ok) {
+            return Promise.reject("There was an error saving the mood");
+          }
+          this.props.history.push("/insights");
+        })
+        .catch((error) => {
+          this.setState({ errors: error.toString() });
+        });
+    }
     event.preventDefault();
   };
 
-  // validateForm(data) {
-  //   const name = data.name;
-  //   const value = data.value;
-  //   let errors = this.state.errors;
+  validateForm() {
+    let data = this.state.data;
+    let errors = [];
+    let valid = true;
 
-  //   switch (name) {
-  //     case "mood":
-  //       errors.push(value === "" ? "Must submit mood" : "");
-  //       break;
-  //     case "feeling":
-  //       errors.push(value === "" ? "Must submit feeling" : "");
-  //       break;
-  //     default:
-  //       break;
-  //   }
+    if (!data["feeling"] || !data["mood"]) {
+      errors.push(!data["mood"] ? "Must submit mood" : null);
+      errors.push(!data["feeling"] ? "Must submit feeling" : null);
+      valid = false;
+    }
 
-  //   this.setState({ errors });
-  // }
+    this.setState({ errors });
+    return valid;
+  }
 
-  handleChange(event, data) {
-    const name = data.name;
-    const value = data.value;
-    this.setState({ [name]: value });
+  handleChange(event, input) {
+    let data = this.state.data;
+    const name = input.name;
+    const value = input.value;
+    data[name] = value;
+    this.setState({ data });
   }
 
   handleInputChange(event) {
-    this.setState({ comment: event.target.value });
+    let data = this.state.data;
+    data["comment"] = event.target.value;
+    this.setState({ data });
   }
 
   renderErrors() {
     if (this.state.errors.length === 0) {
       return null;
     } else {
-      return <div>{this.state.errors}</div>;
+      return (
+        <div className="ui warning message">
+          <div className="header">Form Error:</div>
+          {this.state.errors.map((error) => (
+            <div key={error}>{error}</div>
+          ))}
+        </div>
+      );
     }
   }
 
   render() {
-    const { value } = this.state;
     return (
       <div className="ui segment">
         {this.renderErrors()}
@@ -94,10 +96,10 @@ class MoodForm extends React.Component {
           <div className="field">
             <label>What's your mood? (1 = bad | 7 = excellent) </label>
             <Select
+              clearable
               name="mood"
               placeholder="Mood"
               options={MOODS}
-              value={value}
               onChange={this.handleChange}
             />
           </div>
@@ -106,7 +108,8 @@ class MoodForm extends React.Component {
             <Select
               name="feeling"
               placeholder="Feeling"
-              value={value}
+              multiple
+              selection
               options={FEELINGS}
               onChange={this.handleChange}
             />

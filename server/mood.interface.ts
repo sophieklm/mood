@@ -1,7 +1,7 @@
 export interface Mood {
   id: number;
   mood: number;
-  feeling: Feeling;
+  feeling: Feeling[];
   comment: string;
   createdAt: Date;
 }

@@ -26,6 +26,15 @@ class TableRow extends React.Component {
     }
   }
 
+  renderFeelings() {
+    if (!this.state.data) {
+      return null;
+    } else {
+      const feelings = this.state.data.feeling;
+      return feelings.join(", ");
+    }
+  }
+
   render() {
     return (
       <tr>
@@ -33,9 +42,7 @@ class TableRow extends React.Component {
           <div className="single line">{this.state.data.mood}</div>
         </td>
         <td>
-          <div className="single line capitalize">
-            {this.state.data.feeling}
-          </div>
+          <div className="single line capitalize">{this.renderFeelings()}</div>
         </td>
         <td className="single line">{this.state.data.comment}</td>
         <td className="right aligned">{this.renderDate()}</td>

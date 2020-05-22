@@ -4,10 +4,9 @@ REST API Server with React frontend to allow a user to perform a mood check in a
 
 ### To Do:
 
-- Make "feeling" multi-select and store as array
-- Get validations and error messages to render nicely
-- Reverse table order - use date object rather than string
-- Fix specs
+- Reverse table date order
+- Fix tests
+- Fix warnings for Dropdown (Select component) and findDOMNode
 
 ## Run:
 
