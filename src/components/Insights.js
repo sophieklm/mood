@@ -12,13 +12,7 @@ class Insights extends React.Component {
     fetch("http://localhost:3001/moods")
       .then(async (res) => res.json())
       .then((res) => {
-        let response = [];
-        // converts json object to array of objects
-        /*eslint-disable no-unused-vars*/
-        for (let [key, value] of Object.entries(res)) {
-          response.push(value);
-        }
-        this.setState({ apiResponse: response });
+        this.setState({ apiResponse: res });
       });
   }
 

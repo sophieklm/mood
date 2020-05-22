@@ -1,4 +1,5 @@
 export interface Mood {
+  id: number;
   mood: number;
   feeling: Feeling;
   comment: string;

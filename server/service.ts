@@ -1,20 +1,11 @@
-import fs from "fs";
-import path from "path";
 import { Mood, Moods } from "./mood.interface";
 
 export class MoodService {
-  private moods: Moods;
-  private file;
+  private moods: Mood[];
 
-  constructor({ file = path.join(__dirname, "../db.json") }) {
-    this.file = file;
-    this.moods = this.getMoodsFromFile(file);
+  constructor() {
+    this.moods = [];
   }
-  private getMoodsFromFile = (file) => {
-    const data = fs.readFileSync(file);
-    const moods = JSON.parse(data.toString());
-    return moods;
-  };
 
   public findAll = async (): Promise<Moods> => {
     return this.moods;
@@ -27,12 +18,13 @@ export class MoodService {
       }
       const createdAt = new Date();
       const id = createdAt.valueOf();
-      this.moods[id] = {
+      const mood: Mood = {
         ...newItem,
+        id,
         createdAt,
       };
-      fs.writeFileSync(this.file, JSON.stringify(this.moods));
-      return this.moods[id];
+      this.moods.push(mood);
+      return mood;
     } catch (error) {
       console.log("Something went wrong: create", error);
       throw new Error(error);
@@ -40,8 +32,6 @@ export class MoodService {
   };
 }
 
-const moodService = new MoodService({
-  file: path.join(__dirname, "../db.json"),
-});
+const moodService = new MoodService();
 
 export { moodService };
