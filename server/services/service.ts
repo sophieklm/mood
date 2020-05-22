@@ -7,19 +7,21 @@ export class MoodService {
     this.moods = [];
   }
 
-  public findAll = async (): Promise<Moods> => {
+  public findAll = async () => {
     return this.moods;
   };
 
-  public create = async (newItem: Mood) => {
+  public create = async (newItem) => {
     if (!newItem.mood || !newItem.feeling) {
       throw new Error("Must enter both mood and feeling");
     }
     const createdAt = new Date();
     const id = createdAt.valueOf();
     const mood: Mood = {
-      ...newItem,
       id,
+      mood: newItem.mood,
+      feeling: newItem.feeling,
+      comment: newItem.comment || "",
       createdAt,
     };
     this.moods.push(mood);

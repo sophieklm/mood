@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { moodController } from "./controller";
+import { moodController } from "./controllers/controller";
 
 const app: express.Application = express();
 const port: number = 3001;

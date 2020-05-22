@@ -1,6 +1,6 @@
 import * as express from "express";
-import { Mood, Moods } from "./mood.interface";
-import { moodService } from "./service";
+import { Mood, Moods } from "../services/mood.interface";
+import { moodService } from "../services/service";
 
 export class MoodController {
   public createMood = async (req: express.Request, res: express.Response) => {

@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "npm run watch",
+    "prestart": "npm run build",
+    "start:server": "node dist/server",
+    "watch": "nodemon dist/server",
+    "build": "tsc -p .",
+    "test": "jest --maxWorkers=1 --watchAll"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "typescript": "~3.7.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.41",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
