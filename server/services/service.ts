@@ -7,11 +7,11 @@ export class MoodService {
     this.moods = [];
   }
 
-  public findAll = async () => {
+  public findAll = async (): Promise<Mood[]> => {
     return this.moods;
   };
 
-  public create = async (newItem) => {
+  public create = async (newItem): Promise<Mood> => {
     if (!newItem.mood || !newItem.feeling) {
       throw new Error("Must enter both mood and feeling");
     }
@@ -24,7 +24,7 @@ export class MoodService {
       comment: newItem.comment || "",
       createdAt,
     };
-    this.moods.push(mood);
+    this.moods.unshift(mood);
     return mood;
   };
 }

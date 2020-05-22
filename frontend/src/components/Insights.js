@@ -67,7 +67,7 @@ class Insights extends React.Component {
               <h4 className="ui centered header">{this.renderAverage()}</h4>
             </div>
             <div className="ui teal segment">
-              <h3 className="ui teal header">Check in Count</h3>
+              <h3 className="ui teal centered header">Check in Count</h3>
               <h4 className="ui centered header">{this.renderCheckins()}</h4>
             </div>
             <div className="ui padded centered grid">

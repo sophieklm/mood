@@ -4,9 +4,9 @@ import bodyParser from "body-parser";
 import { moodController } from "./controllers/controller";
 
 const app: express.Application = express();
-const port: number = 3001;
+const port: string = process.env.PORT;
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,5 +16,8 @@ router.get("/moods", moodController.getMoods);
 router.post("/moods", moodController.createMood);
 
 app.listen(port, function () {
+  // tslint:disable-next-line:no-console
   console.log(`Listening on port ${port}`);
 });
+
+module.exports = app;

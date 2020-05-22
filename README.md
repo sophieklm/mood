@@ -4,7 +4,6 @@ REST API Server with React frontend to allow a user to perform a mood check in a
 
 ### To Do:
 
-- Reverse table date order
 - Fix frontend tests
 - Fix warnings for Dropdown (Select component) and findDOMNode
 
