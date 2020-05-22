@@ -32,13 +32,13 @@ describe("Mood Service", () => {
     feeling: "happy",
   };
 
-  it("should return a list of moods", async () => {
+  it("should add a createdAt", async () => {
     await moodService.create(moodRequest);
 
     expect(moodService.moods).toStrictEqual(moods);
   });
 
-  it("should add createdAt", async () => {
+  it("should get a list of moods", async () => {
     await moodService.create(moodRequest);
     const allMoods = await moodService.findAll();
 
