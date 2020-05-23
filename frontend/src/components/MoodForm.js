@@ -96,6 +96,7 @@ class MoodForm extends React.Component {
           <div className="field">
             <label>What's your mood? (1 = bad | 7 = excellent) </label>
             <Select
+              className="mood"
               clearable
               name="mood"
               placeholder="Mood"
@@ -106,6 +107,7 @@ class MoodForm extends React.Component {
           <div className="field">
             <label>How are you feeling?</label>
             <Select
+              className="feeling"
               name="feeling"
               placeholder="Feeling"
               multiple

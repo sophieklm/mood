@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme from "enzyme";
+import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import MoodForm from "../components/MoodForm";
 
@@ -7,43 +7,71 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe("<MoodForm />", () => {
   let wrapper;
-  const setState = jest.fn();
-  const useStateSpy = jest.spyOn(React, "useState");
-  useStateSpy.mockImplementation((init) => [init, setState]);
+  let mockSubmit;
 
   beforeEach(() => {
-    wrapper = Enzyme.mount(Enzyme.shallow(<MoodForm />).get(0));
+    mockSubmit = jest.fn();
+    wrapper = shallow(<MoodForm submit={mockSubmit} />);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("Mood Input", () => {
-    it("Should capture mood correctly onChange", () => {
-      expect(wrapper.find("mood")).toBeDefined();
-      const mood = wrapper.find("mood").at(0);
-      mood.instance().value = "Test";
-      mood.simulate("change");
-      expect(setState).toHaveBeenCalledWith("Test");
+  describe("handleChange", () => {
+    it("should call setState on data", () => {
+      const mockData = {
+        name: "mood",
+        value: "mood",
+      };
+      const expected = {
+        data: {
+          mood: "mood",
+        },
+        errors: [],
+      };
+      wrapper.instance().handleChange(null, mockData);
+      expect(wrapper.state()).toEqual(expected);
     });
   });
 
-  describe("Feeling Input", () => {
-    it("Should capture feeling correctly onChange", () => {
-      const feeling = wrapper.find("feeling").at(0);
-      feeling.instance().value = "Testing";
-      feeling.simulate("change");
-      expect(setState).toHaveBeenCalledWith("Testing");
+  describe("handleSubmit", () => {
+    it("should call preventDefault", () => {
+      const mockPreventDefault = jest.fn();
+      const mockEvent = {
+        preventDefault: mockPreventDefault,
+      };
+      wrapper.instance().handleSubmit(mockEvent);
+      expect(mockPreventDefault).toHaveBeenCalled();
     });
   });
 
-  describe("Comment Input", () => {
-    it("Should capture comment correctly onChange", () => {
-      const comment = wrapper.find("input").at(0);
-      comment.instance().value = "Tester";
-      comment.simulate("change");
-      expect(setState).toHaveBeenCalledWith("Tester");
+  describe("Select", () => {
+    it("should call handle change", () => {
+      const spy = jest.spyOn(wrapper.instance(), "handleChange");
+      wrapper.instance().forceUpdate();
+      const mockData = {
+        name: "mood",
+        value: "mood",
+      };
+      let event;
+      wrapper.find(".mood").simulate("change", event, mockData);
+      expect(spy).toHaveBeenCalledWith(event, mockData);
+    });
+  });
+
+  describe("input", () => {
+    it("should call handle input change", () => {
+      const spy = jest.spyOn(wrapper.instance(), "handleInputChange");
+      wrapper.instance().forceUpdate();
+      const mockData = {
+        target: {
+          name: "comment",
+          value: "comment",
+        },
+      };
+      wrapper.find("input").simulate("change", mockData);
+      expect(spy).toHaveBeenCalledWith(mockData);
     });
   });
 });
