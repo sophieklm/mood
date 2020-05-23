@@ -12,11 +12,12 @@
     "start:server": "node dist/server",
     "watch": "nodemon dist/server",
     "build": "tsc -p .",
-    "test": "jest --maxWorkers=1 --watchAll"
+    "test": "NODE_ENV=test jest --maxWorkers=1 --watchAll"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "typescript": "~3.7.2"
   },

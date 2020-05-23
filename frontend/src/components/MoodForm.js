@@ -26,7 +26,7 @@ class MoodForm extends React.Component {
           comment: this.state.data.comment,
         }),
       };
-      fetch("http://localhost:3001/moods", requestOptions)
+      fetch(`${process.env.REACT_APP_API_URL}/moods`, requestOptions)
         .then((response) => {
           if (!response.ok) {
             return Promise.reject("There was an error saving the mood");
@@ -34,7 +34,7 @@ class MoodForm extends React.Component {
           this.props.history.push("/insights");
         })
         .catch((error) => {
-          this.setState({ errors: error.toString() });
+          this.setState({ errors: [error.toString()] });
         });
     }
     event.preventDefault();

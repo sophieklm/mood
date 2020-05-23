@@ -1,7 +1,10 @@
 import express from "express";
+import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { moodController } from "./controllers/controller";
+
+dotenv.config();
 
 const app: express.Application = express();
 const port: string = process.env.PORT;
@@ -15,9 +18,11 @@ app.use("/", router);
 router.get("/moods", moodController.getMoods);
 router.post("/moods", moodController.createMood);
 
-app.listen(port, function () {
-  // tslint:disable-next-line:no-console
-  console.log(`Listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, function () {
+    // tslint:disable-next-line:no-console
+    console.log(`Listening on port ${port}`);
+  });
+}
 
 module.exports = app;

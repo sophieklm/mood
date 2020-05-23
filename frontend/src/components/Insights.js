@@ -9,7 +9,7 @@ class Insights extends React.Component {
   }
 
   callAPI() {
-    fetch("http://localhost:3001/moods")
+    fetch(`${process.env.REACT_APP_API_URL}/moods`)
       .then(async (res) => res.json())
       .then((res) => {
         this.setState({ apiResponse: res });

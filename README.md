@@ -13,6 +13,7 @@ Server:
 
 ```
 cd server
+cp .env-example .env
 npm install
 npm start
 npm test
@@ -22,6 +23,7 @@ Frontend:
 
 ```
 cd frontend
+cp .env-example .env
 npm install
 npm start
 ```

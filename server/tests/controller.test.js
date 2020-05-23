@@ -51,12 +51,13 @@ describe("Mood Controller", () => {
     });
 
     xit("should error if there was a problem", async () => {
-      jest.mock("../services/service");
-      const { moodService } = require("../services/service");
+      jest.mock("../services/service", () => {
+        return {
+          findAll: jest.fn().mockImplementation(() => Promise.reject("error")),
+        };
+      });
       const res = mockResponse();
-      moodService.findAll.mockImplementation(() => Promise.reject("error"));
       await moodController.getMoods(null, res);
-      expect(moodService.findAll).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(400);
     });
   });
