@@ -1,4 +1,4 @@
-import { Mood, Moods } from "./mood.interface";
+import { Mood } from './mood.interface';
 
 export class MoodService {
   private moods: Mood[];
@@ -13,7 +13,7 @@ export class MoodService {
 
   public create = async (newItem): Promise<Mood> => {
     if (!newItem.mood || !newItem.feeling) {
-      throw new Error("Must enter both mood and feeling");
+      throw new Error('Must enter both mood and feeling');
     }
     const createdAt = new Date();
     const id = createdAt.valueOf();
@@ -21,7 +21,7 @@ export class MoodService {
       id,
       mood: newItem.mood,
       feeling: newItem.feeling,
-      comment: newItem.comment || "",
+      comment: newItem.comment || '',
       createdAt,
     };
     this.moods.unshift(mood);

@@ -1,11 +1,10 @@
 # Mood
 
-REST API Server with React frontend to allow a user to perform a mood check in and see insights about their mood.
+REST API Server built with Express and TypeScript, with a React frontend to allow a user to perform a mood check in and see insights about their mood.
 
 ### To Do:
 
-- Fix frontend tests
-- Fix warnings for Dropdown (Select component) and findDOMNode
+- Fix tests
 
 ## Run:
 

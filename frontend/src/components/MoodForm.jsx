@@ -29,9 +29,6 @@ class MoodForm extends React.Component {
       };
       fetch(`${process.env.REACT_APP_API_URL}/moods`, requestOptions)
         .then((response) => {
-          if (!response.ok) {
-            return Promise.reject("There was an error saving the mood");
-          }
           this.props.history.push("/insights");
         })
         .catch((error) => {
