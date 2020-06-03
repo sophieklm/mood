@@ -1,5 +1,7 @@
 import React from "react";
 import Table from "./Table";
+import Segment from "./Segment";
+import TableHeader from "./TableHeader";
 import { Button } from "semantic-ui-react";
 
 class Insights extends React.Component {
@@ -38,15 +40,6 @@ class Insights extends React.Component {
     }
   }
 
-  renderTable() {
-    const responses = this.state.apiResponse;
-    if (responses.length === 0) {
-      return null;
-    } else {
-      return <Table data={responses} />;
-    }
-  }
-
   renderCheckins() {
     const responses = this.state.apiResponse;
     if (responses.length === 0) {
@@ -62,21 +55,26 @@ class Insights extends React.Component {
         <h2 className="ui teal centered header">Insights</h2>
         <div className="internally celled ui two column center grid">
           <div className="three wide column">
-            <div className="ui teal segment">
-              <h3 className="ui teal centered header">Average Mood</h3>
+            <Segment title="Average Mood">
               <h4 className="ui centered header">{this.renderAverage()}</h4>
-            </div>
-            <div className="ui teal segment">
-              <h3 className="ui teal centered header">Check in Count</h3>
+            </Segment>
+            <Segment title="Check in Count">
               <h4 className="ui centered header">{this.renderCheckins()}</h4>
-            </div>
+            </Segment>
             <div className="ui padded centered grid">
               <Button className="ui button teal" href="/">
                 New Mood
               </Button>
             </div>
           </div>
-          <div className="twelve wide center column">{this.renderTable()}</div>
+          <div className="twelve wide center column">
+            <table className="ui celled padded teal table">
+              <TableHeader />
+              <tbody>
+                <Table data={this.state.apiResponse} />
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

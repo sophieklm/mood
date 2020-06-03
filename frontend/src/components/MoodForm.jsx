@@ -2,6 +2,7 @@ import React from "react";
 import { Select, Button, Label } from "semantic-ui-react";
 import { Slider } from "react-semantic-ui-range";
 import { FEELINGS } from "../consts";
+import FormField from "./FormField";
 
 class MoodForm extends React.Component {
   constructor(props) {
@@ -65,7 +66,7 @@ class MoodForm extends React.Component {
 
   handleInputChange(event) {
     let data = { ...this.state.data };
-    data["comment"] = event.target.value;
+    data[event.target.name] = event.target.value;
     this.setState({ data });
   }
 
@@ -93,8 +94,7 @@ class MoodForm extends React.Component {
           <Button className="ui button teal right floated" href="/insights">
             Insights
           </Button>
-          <div className="field">
-            <label>What's your mood? (1 = bad | 7 = excellent)</label>
+          <FormField label="What's your mood? (1 = bad | 7 = excellent)">
             <Slider
               discrete
               color="teal"
@@ -114,9 +114,8 @@ class MoodForm extends React.Component {
               }}
             />
             <Label color="teal">{this.state.data.mood}</Label>
-          </div>
-          <div className="field">
-            <label>How are you feeling?</label>
+          </FormField>
+          <FormField label="How are you feeling?">
             <Select
               className="feeling"
               name="feeling"
@@ -126,15 +125,14 @@ class MoodForm extends React.Component {
               options={FEELINGS}
               onChange={this.handleChange}
             />
-          </div>
-          <div className="field">
-            <label>Any other comments: </label>
+          </FormField>
+          <FormField label="Any other comments">
             <input
               name="comment"
               placeholder="Comment"
               onChange={this.handleInputChange}
             />
-          </div>
+          </FormField>
           <button className="ui button teal">Submit</button>
         </form>
       </div>

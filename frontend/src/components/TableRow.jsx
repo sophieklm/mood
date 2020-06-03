@@ -2,50 +2,30 @@ import React from "react";
 import dateFormat from "dateformat";
 
 class TableRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: this.props.data };
+  renderDate(item) {
+    const date = item.createdAt;
+    return dateFormat(Date.parse(date), "dS mmmm yyyy, h:MM TT");
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.data !== state.prevPropsData) {
-      return {
-        prevPropsData: props.data,
-        data: props.data,
-      };
-    }
-    return null;
-  }
-
-  renderDate() {
-    if (!this.state.data) {
-      return null;
-    } else {
-      const date = this.state.data.createdAt;
-      return dateFormat(Date.parse(date), "dS mmmm yyyy, h:MM TT");
-    }
-  }
-
-  renderFeelings() {
-    if (!this.state.data) {
-      return null;
-    } else {
-      const feelings = this.state.data.feeling;
-      return feelings.join(", ");
-    }
+  renderFeelings(item) {
+    const feelings = item.feeling;
+    return feelings.join(", ");
   }
 
   render() {
+    const { data } = this.props;
     return (
       <tr>
         <td>
-          <div className="single line">{this.state.data.mood}</div>
+          <div className="single line">{data.mood}</div>
         </td>
         <td>
-          <div className="single line capitalize">{this.renderFeelings()}</div>
+          <div className="single line capitalize">
+            {this.renderFeelings(data)}
+          </div>
         </td>
-        <td className="single line">{this.state.data.comment}</td>
-        <td className="right aligned">{this.renderDate()}</td>
+        <td className="single line">{data.comment}</td>
+        <td className="right aligned">{this.renderDate(data)}</td>
       </tr>
     );
   }
