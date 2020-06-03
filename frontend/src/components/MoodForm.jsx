@@ -1,13 +1,13 @@
 import React from "react";
-import { Select } from "semantic-ui-react";
-import { MOODS, FEELINGS } from "../consts";
-import { Button } from "semantic-ui-react";
+import { Select, Button, Label } from "semantic-ui-react";
+import { Slider } from "react-semantic-ui-range";
+import { FEELINGS } from "../consts";
 
 class MoodForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {},
+      data: { mood: 4 },
       errors: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,7 +56,7 @@ class MoodForm extends React.Component {
   }
 
   handleChange(event, input) {
-    let data = this.state.data;
+    let data = { ...this.state.data };
     const name = input.name;
     const value = input.value;
     data[name] = value;
@@ -64,7 +64,7 @@ class MoodForm extends React.Component {
   }
 
   handleInputChange(event) {
-    let data = this.state.data;
+    let data = { ...this.state.data };
     data["comment"] = event.target.value;
     this.setState({ data });
   }
@@ -94,15 +94,26 @@ class MoodForm extends React.Component {
             Insights
           </Button>
           <div className="field">
-            <label>What's your mood? (1 = bad | 7 = excellent) </label>
-            <Select
-              className="mood"
-              clearable
-              name="mood"
-              placeholder="Mood"
-              options={MOODS}
-              onChange={this.handleChange}
+            <label>What's your mood? (1 = bad | 7 = excellent)</label>
+            <Slider
+              discrete
+              color="teal"
+              inverted={false}
+              settings={{
+                start: this.state.data.mood,
+                min: 1,
+                max: 7,
+                step: 1,
+                onChange: (value) => {
+                  let data = { ...this.state.data };
+                  data.mood = value;
+                  this.setState({
+                    data,
+                  });
+                },
+              }}
             />
+            <Label color="teal">{this.state.data.mood}</Label>
           </div>
           <div className="field">
             <label>How are you feeling?</label>
